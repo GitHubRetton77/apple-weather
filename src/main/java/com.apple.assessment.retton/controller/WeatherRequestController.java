@@ -47,10 +47,10 @@ public class WeatherRequestController {
         }
 
         // Get weather from external service
-        Weather weather = weatherService.getWeather(address.getCity());
+        Weather weather = weatherService.getWeather(address);
 
         // Cache weather
-        weatherCache.cacheWeather(weather);
+        weatherCache.cacheWeather(address, weather);
 
         // Log request result
         logger.info("Getting of weather successful! ^_^");

@@ -1,22 +1,43 @@
 package com.apple.assessment.retton.service.weather;
 
 
+import com.apple.assessment.retton.model.Address;
 import com.apple.assessment.retton.model.Weather;
-import com.apple.assessment.retton.service.weather.AppleWeatherService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
 
 @Service
 public class RettonWeatherService implements AppleWeatherService {
 
-    private RestTemplate webCommunicator;
+    private static final String WEATHER_API_KEY = "059a592634374f20972212717250403";
+
+    private static final String WEATHER_API_URL = "http://api.weatherapi.com/v1/current.json";
+
+    private static RestTemplate webCommunicator = new RestTemplate();
+
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public Weather getWeather(String city) {
+    public Weather getWeather(Address address) throws IOException {
 
-        // webCommunicator get weather from a weather service
+        String postalCode = address.getPostalCode();
 
-        Weather testWeather = new Weather("77F");
-        return testWeather;
+        String weatherAPIRequestParameters = "?key=" + WEATHER_API_KEY + "&q=" + postalCode;
+
+        ResponseEntity<String> weatherAPIServiceResponse = webCommunicator.getForEntity(WEATHER_API_URL + weatherAPIRequestParameters, String.class);
+
+        JsonNode responseBodyRoot = objectMapper.readTree(weatherAPIServiceResponse.getBody());
+
+        JsonNode currentWeatherData = responseBodyRoot.path("current");
+        String currentTemperatureInFJson = currentWeatherData.get("temp_f").asText();
+
+        Weather weather = new Weather(currentTemperatureInFJson);
+
+        return weather;
     }
 }

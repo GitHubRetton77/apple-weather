@@ -1,6 +1,8 @@
 package com.apple.assessment.retton.model;
 
-public class Weather {
+import java.io.Serializable;
+
+public class Weather implements Serializable {
 
     private String currentTemperature;
 

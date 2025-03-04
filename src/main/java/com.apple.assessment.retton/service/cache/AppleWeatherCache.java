@@ -5,7 +5,7 @@ import com.apple.assessment.retton.model.Weather;
 
 public interface AppleWeatherCache {
 
-    void cacheWeather(Weather weather);
+    void cacheWeather(Address address, Weather weather);
 
     Weather getWeather(Address address);
 }
