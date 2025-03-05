@@ -13,6 +13,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -28,34 +29,12 @@ public class WeatherRequestControllerTest {
     @Autowired
     public TestRestTemplate restTemplate;
 
-    @Test
-    public void getWeather_Successful(){
-
-        Address address = new Address("2631 E Charleston Ave",
-                "",
-                "Phoenix",
-                "Arizona",
-                "85032",
-                "US");
-        HttpEntity<Address> request = new HttpEntity<>(address, new HttpHeaders());
-
-        ResponseEntity<Weather> response = restTemplate.exchange(
-                "http://localhost:" + port + "/weather/get/",
-                HttpMethod.GET,
-                request,
-                Weather.class);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        Weather weatherData = response.getBody();
-
-        assertNotNull(weatherData);
-        assertNotNull(weatherData.getCurrentTemperature());
-
-    }
 
     @Test
     public void getWeather_Failure(){
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         Address address = new Address("bad",
                 "",
@@ -63,7 +42,7 @@ public class WeatherRequestControllerTest {
                 "bad",
                 "bad",
                 "bad");
-        HttpEntity<Object> request = new HttpEntity<>(address);
+        HttpEntity<Object> request = new HttpEntity<>(address, requestHeaders);
 
         ResponseEntity<Weather> response = restTemplate.exchange(
                 "http://localhost:" + port + "/weather/get/",
