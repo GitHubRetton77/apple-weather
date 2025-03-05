@@ -61,3 +61,14 @@ curl --location --request GET 'localhost:8080/weather/get' \
 }'
 ```
 
+### Things for improvement
+- Implementation
+  - Relocate constants in code to property configuration file
+  - Expand weather data returned
+- Unit test
+  - Mock uses of Weather API and Redis in unit tests instead of using live ones. Note: Was not able to apply mocks as there was not time to sort out the dependency version conflicts encountered
+  - Add more test cases
+  - Improve code coverage
+- Documentation
+  - Add an architecture diagram
+

@@ -31,18 +31,19 @@ public class WeatherRequestController {
     public Weather getWeather(@RequestBody Address address) throws Exception {
 
         // log start of request processing
-        logger.info("Get weather request received with address:\n", address);
+        logger.info("Get weather request received with address:\n", address.toString());
 
         // Validate Request
         boolean isValidAddress = AddressValidator.isAddressValid(address);
         if(!isValidAddress){
-            logger.error("Failed to get weather - bad address: \n", address);
+            logger.error("Failed to get weather - bad address: \n", address.toString());
             throw new Exception("Address is not valid.");
         }
 
         // Get weather from cache if available
         Weather cachedWeather = weatherCache.getWeather(address);
         if(cachedWeather != null){
+            cachedWeather.setFromCache(true);
             return cachedWeather;
         }
 
