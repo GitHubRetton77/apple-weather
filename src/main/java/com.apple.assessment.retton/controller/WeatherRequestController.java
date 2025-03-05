@@ -28,7 +28,7 @@ public class WeatherRequestController {
     private Logger logger = LoggerFactory.getLogger(WeatherRequestController.class);
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    private Weather getWeather(@RequestBody Address address) throws Exception {
+    public Weather getWeather(@RequestBody Address address) throws Exception {
 
         // log start of request processing
         logger.info("Get weather request received with address:\n", address);

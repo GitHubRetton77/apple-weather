@@ -6,6 +6,9 @@ public class Weather implements Serializable {
 
     private String currentTemperature;
 
+    public Weather(){
+    }
+
     public Weather(String currentTemperature) {
         this.currentTemperature = currentTemperature;
     }

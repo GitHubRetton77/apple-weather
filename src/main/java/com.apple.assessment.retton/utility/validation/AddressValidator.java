@@ -5,7 +5,7 @@ import com.apple.assessment.retton.model.Address;
 public class AddressValidator {
 
     public static boolean isAddressValid(Address address){
-        boolean isValidCountry = (address.getPostalCode() != null && !address.getPostalCode().isEmpty());
+        boolean isValidCountry = (address.getCountry() != null && !address.getCountry().isEmpty());
         boolean isValidCity = (address.getCity() != null && !address.getCity().isEmpty());
         boolean isValidPostalCode = (address.getPostalCode() != null && !address.getPostalCode().isEmpty());
 
